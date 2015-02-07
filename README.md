@@ -1,4 +1,4 @@
-## Exploratory Data Analysis - Course Project
+## Exploratory Data Analysis - Course Project 1
 
 
 This repository contains my work for the Coursera Exploratory Data Analysis' course project.
