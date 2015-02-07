@@ -1,114 +1,69 @@
-## Introduction
-
-This assignment uses data from
-the <a href="http://archive.ics.uci.edu/ml/">UC Irvine Machine
-Learning Repository</a>, a popular repository for machine learning
-datasets. In particular, we will be using the "Individual household
-electric power consumption Data Set" which I have made available on
-the course web site:
+## Exploratory Data Analysis - Course Project
 
 
-* <b>Dataset</b>: <a href="https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip">Electric power consumption</a> [20Mb]
+This repository contains my work for the Coursera Exploratory Data Analysis' course project.
 
-* <b>Description</b>: Measurements of electric power consumption in
-one household with a one-minute sampling rate over a period of almost
-4 years. Different electrical quantities and some sub-metering values
-are available.
+#### Introduction
 
+You can find the original README [here][i1] or in the [original repo][i2]
 
-The following descriptions of the 9 variables in the dataset are taken
-from
-the <a href="https://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption">UCI
-web site</a>:
+[i1]: https://github.com/rdpeng/ExData_Plotting1
+[i2]: https://github.com/rdpeng/ExData_Plotting1
 
-<ol>
-<li><b>Date</b>: Date in format dd/mm/yyyy </li>
-<li><b>Time</b>: time in format hh:mm:ss </li>
-<li><b>Global_active_power</b>: household global minute-averaged active power (in kilowatt) </li>
-<li><b>Global_reactive_power</b>: household global minute-averaged reactive power (in kilowatt) </li>
-<li><b>Voltage</b>: minute-averaged voltage (in volt) </li>
-<li><b>Global_intensity</b>: household global minute-averaged current intensity (in ampere) </li>
-<li><b>Sub_metering_1</b>: energy sub-metering No. 1 (in watt-hour of active energy). It corresponds to the kitchen, containing mainly a dishwasher, an oven and a microwave (hot plates are not electric but gas powered). </li>
-<li><b>Sub_metering_2</b>: energy sub-metering No. 2 (in watt-hour of active energy). It corresponds to the laundry room, containing a washing-machine, a tumble-drier, a refrigerator and a light. </li>
-<li><b>Sub_metering_3</b>: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.</li>
-</ol>
+I've chosen to modify the README in order to integrate information on how to use the codes in this repository and to cite my references.
+However, all the informations concerning where the data come from and describing the variables can be found in the [oldREADME][i1] and therefore won't be reproduced here.
 
-## Loading the data
+The purpose of this project is to demonstrate our ability **to plot** a smaller dataset extracted from a bigger one (2,075,259 rows and 9 columns) **using the base plotting system**.
 
 
+#### Content
+
+This repository contains thirteen files and one folder :
+* This README,
+* the oldREADME
+* __the eight files required__ for this project : one .R file (the code) and one .png file (the plot) for each of the four plots drew
+* the figure folder (containing four files) was kept from the original repository in order to facilitate some comparison, however those original files are bigger in size and lower in resolution.
+
+_There won't be any CodeBook as the variables are described in the [oldREADME][i1]_
 
 
+#### Prerequisites
+_(or how to run this code)_
 
-When loading the dataset into R, please consider the following:
+* The data should be [downloaded][p1], unzipped and placed into your working directory. However the codes will check if the data are available and will download and/or unzip it for you if needed.
+* The plot(1 to 4).R  scripts go __in the same working directory__.
 
-* The dataset has 2,075,259 rows and 9 columns. First
-calculate a rough estimate of how much memory the dataset will require
-in memory before reading into R. Make sure your computer has enough
-memory (most modern computers should be fine).
+* The script will __require the stringr package__. (_You may need to install this package if you hadn't before, then the script will load it automatically_)
 
-* We will only be using data from the dates 2007-02-01 and
-2007-02-02. One alternative is to read the data from just those dates
-rather than reading in the entire dataset and subsetting to those
-dates.
+* Warning : The original unzipped file (household_power_consumption.txt) can be heavy to read in a simple text editor (126MB). You may want to use a superior text editor like (notepad++ or wrangler). The scripts provide a fast, safe way to read this data and will write a much smaller subsetted .txt file (hpc_subset.txt, 176kb).
 
-* You may find it useful to convert the Date and Time variables to
-Date/Time classes in R using the `strptime()` and `as.Date()`
-functions.
+[p1]: https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip
 
-* Note that in this dataset missing values are coded as `?`.
+#### Steps (each of the codes are constructed on the same structure)
+_(what the code does, the explanations of the data are in the oldREADME)_
 
+1. Check if the household_power_consumption.txt exists and download it and/or unzip it depending of the case.
+2. Subtract the observations recorded on the 1st and 2nd of February 2007. 
+3. Melt the date and time in one single column.
+4. Plot the data (line 116 ff.) according to the examples shown in the [original README][i1] or in the figure folder. 
+5. Inform the user when all is done.
 
-## Making Plots
-
-Our overall goal here is simply to examine how household energy usage
-varies over a 2-day period in February, 2007. Your task is to
-reconstruct the following plots below, all of which were constructed
-using the base plotting system.
-
-First you will need to fork and clone the following GitHub repository:
-[https://github.com/rdpeng/ExData_Plotting1](https://github.com/rdpeng/ExData_Plotting1)
+_Note : the codes use the shell() function because of its efficiency (only a few seconds to read, subset and plot from the original dataset). However the drawback is that this shell() function is only available on Windows OS, instructions for MAC and LINUX users have been inserted in the codes from line 38 to 51 ("shell" should be replaced by "system"). An alternate multi-platforms code is available from line 69 to 93._
 
 
-For each plot you should
+#### References :
+* The png() function's [documentation][Ref01]
+* David Smith's [10 tips][Ref02] for making your R graphics look their best
+* Christopher Rasmussen's [idea][Ref03] concerning the system() function.
+* The system() function's [documentation][Ref04]
+* Henrik Bengtsson-3's [recommendation][Ref05] on the shell() function
+* The [escape sequences][Ref06] in Regular expressions
 
-* Construct the plot and save it to a PNG file with a width of 480
-pixels and a height of 480 pixels.
+_Note : The third reference is only accessible to participants of the 11th edition of this course._
 
-* Name each of the plot files as `plot1.png`, `plot2.png`, etc.
-
-* Create a separate R code file (`plot1.R`, `plot2.R`, etc.) that
-constructs the corresponding plot, i.e. code in `plot1.R` constructs
-the `plot1.png` plot. Your code file **should include code for reading
-the data** so that the plot can be fully reproduced. You should also
-include the code that creates the PNG file.
-
-* Add the PNG file and R code file to your git repository
-
-When you are finished with the assignment, push your git repository to
-GitHub so that the GitHub version of your repository is up to
-date. There should be four PNG files and four R code files.
-
-
-The four plots that you will need to construct are shown below. 
-
-
-### Plot 1
-
-
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
-
-
-### Plot 2
-
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
-
-
-### Plot 3
-
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
-
-
-### Plot 4
-
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
-
+[Ref01]: http://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/png.html
+[Ref02]: http://blog.revolutionanalytics.com/2009/01/10-tips-for-making-your-r-graphics-look-their-best.html
+[Ref03]: https://class.coursera.org/exdata-011/forum/thread?thread_id=21#comment-50
+[Ref04]: http://stat.ethz.ch/R-manual/R-devel/library/base/html/system.html
+[Ref05]: http://r.789695.n4.nabble.com/how-to-run-system-command-tp4449597p4451758.html
+[Ref06]: http://stat545-ubc.github.io/block022_regular-expression.html
