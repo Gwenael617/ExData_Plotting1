@@ -7,7 +7,7 @@ This repository contains my work for the Coursera Exploratory Data Analysis' cou
 
 You can find the original README [here][i1] or in the [original repo][i2]
 
-[i1]: https://github.com/rdpeng/ExData_Plotting1
+[i1]: https://github.com/Gwenael617/ExData_Plotting1/blob/master/oldREADME.md
 [i2]: https://github.com/rdpeng/ExData_Plotting1
 
 I've chosen to modify the README in order to integrate information on how to use the codes in this repository and to cite my references.
