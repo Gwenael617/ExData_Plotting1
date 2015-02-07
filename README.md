@@ -54,7 +54,7 @@ _Note : the codes use the shell() function because of its efficiency (only a few
 #### References :
 * The png() function's [documentation][Ref01]
 * David Smith's [10 tips][Ref02] for making your R graphics look their best
-* Christopher Rasmussen's [idea][Ref03] concerning the system() function.
+* Christoffer Rasmussen's [idea][Ref03] concerning the system() function.
 * The system() function's [documentation][Ref04]
 * Henrik Bengtsson-3's [recommendation][Ref05] on the shell() function
 * The [escape sequences][Ref06] in Regular expressions
