@@ -43,7 +43,7 @@ rm(list= c("dataUrl", "dataZip", "dataFile"))
 #### to make it work on MAC or LINUX, you will have to replace :
 #### "shell" by "system" (2 lines) and maybe "grep -E" by "grep" (1 line)
 #### in the regular expression you may have to suppress the backlash "\"
-#### or replace it by a forwardlash "/" but I dont'think so.
+#### or replace it by a forwardlash "/".
 
 #### an alternate multi-platform reading function (readThisData2)
 #### has been commented out below (lines 69 to 93)
