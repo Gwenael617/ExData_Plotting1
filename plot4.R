@@ -116,7 +116,6 @@ cat(": done ")
 # plot the data (plot1)
 
 plot4 <- function(){
-        library(stringr)
         ## set temporary the locale to english to automatize the x-axis label
         #### record locale
         userLocale <- Sys.getlocale("LC_TIME")
@@ -126,12 +125,10 @@ plot4 <- function(){
         ## prepare the x-axis label for all plots
         #### catch the values of the plot, add one minute for the end of plot
         ####  in order to catch the next day's name
-        xAxisNames <- c(weekdays(min(dataLines$datetime)),
-                        weekdays(dataLines$datetime[1441]),
-                        weekdays(max(dataLines$datetime)+60))
-        ## use the stringr package to shorten the names to 3 characters
-        xAxisNames <- substr(xAxisNames, 1,3)
-        
+        xAxisNames <- c(weekdays(min(dataLines$datetime), abbreviate=TRUE),
+                        weekdays(dataLines$datetime[1441], abbreviate=TRUE),
+                        weekdays(max(dataLines$datetime)+60, abbreviate=TRUE))
+                
         # open an empty png file
         png(file = "plot4.png", width = 480, height = 480,
             type = "cairo", bg = "transparent")
