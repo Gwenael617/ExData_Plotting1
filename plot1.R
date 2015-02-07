@@ -40,13 +40,13 @@ rm(list= c("dataUrl", "dataZip", "dataFile"))
 
 #### however this function in this form work for Windows OS only !
 #### shell() does not exist on MAC or LINUX
-#### to make it work on MAC or LINUX, you may have to replace :
-#### "shell" by "system" (2 lines) and "grep -E" by "grep" (1 line)
+#### to make it work on MAC or LINUX, you will have to replace :
+#### "shell" by "system" (2 lines) and maybe "grep -E" by "grep" (1 line)
 #### in the regular expression you may have to suppress the backlash "\"
-#### or replace it by a forwardlash "/"
+#### or replace it by a forwardlash "/" but I dont'think so.
 
 #### an alternate multi-platform reading function (readThisData2)
-#### has been commented out below 
+#### has been commented out below (lines 69 to 93)
 #### However as readThisData2() can take up to 4 minutes
 #### I'll go with the three seconds of readThisData()
 
