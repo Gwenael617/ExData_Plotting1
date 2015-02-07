@@ -116,7 +116,6 @@ cat(": done ")
 # plot the data (plot1)
 
 plot2 <- function(){
-        library(stringr)
         # open an empty png file
         png(file = "plot2.png", width = 480, height = 480,
             type = "cairo", bg = "transparent")
@@ -134,11 +133,9 @@ plot2 <- function(){
         on.exit(Sys.setlocale("LC_TIME", userLocale))
         #### catch the values of the plot, add one minute for the end of plot
         #### in order to catch the next day's name
-        xAxisNames <- c(weekdays(min(dataLines$datetime)),
-                        weekdays(dataLines$datetime[1441]),
-                        weekdays(max(dataLines$datetime)+60))
-        ## use the stringr package to shorten the names to 3 characters
-        xAxisNames <- substr(xAxisNames, 1,3)
+        xAxisNames <- c(weekdays(min(dataLines$datetime), abbreviate=TRUE),
+                        weekdays(dataLines$datetime[1441], abbreviate=TRUE),
+                        weekdays(max(dataLines$datetime)+60, abbreviate=TRUE))
         axis(1, at = c(1, 1440, 2881), labels = xAxisNames)
         axis(2) ## set automatically the y axis
         ## it's the same as :
