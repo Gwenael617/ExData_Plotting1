@@ -32,12 +32,12 @@ if(!file.exists(dataFile)){
                 writeLines(dateDownloaded, fileConn)
                 close(fileConn)
                 ## clean the global environement
-                rm(list = c("dataDl", "dateDownloaded", "fileConn"))
+                rm(list = c("dateDownloaded", "fileConn"))
         }
         unzip(dataZip)
 }
 ## clean the global environement
-rm(list= c("dataUrl", "dataZip", "dataFile"))
+rm(list= c("dataUrl", "dataZip", "dataFile", "dataDl"))
 
 ## due to the length of the data more than 2 millions lines,
 ## we'll read only the relevant lines for this study
