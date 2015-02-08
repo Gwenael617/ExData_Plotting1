@@ -4,52 +4,53 @@
 ## URL: https://class.coursera.org/exdata-011
 ## Course Project 1
 ## Author: GG
-## OS Windows 7 // R 3.1.2 "Pumpkin Helmet"
-## Last modified on February 7th, 2015
+## R 3.1.2 "Pumpkin Helmet"
+## Created on February 5th, 2015
+## Last modified on February 8th, 2015
 #################################################.
 
-## Verify if the file exists, if not download and unzip the data
+## verify if file exists : information on the data
 dataUrl<-"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 dataZip <- "exdata_data_household_power_consumption.zip"
 dataFile <- "household_power_consumption.txt"
+
+## verify the operating system and create download functions
+if(.Platform$OS.type == "windows"){ ## for windows
+        dataDl <- function(){download.file(url=dataUrl, destfile = dataZip)}}
+if(.Platform$OS.type != "windows"){ ## for Mac, Linux and other OS
+        dataDl <- function(){download.file(url=dataUrl, destfile = dataZip, 
+                                           method="curl")}}
+
+## Verify if the file exists, if not download and/or unzip the data
 if(!file.exists(dataFile)){
-        if(!file.exists(dataZip)){                
-                data <- download.file(url=dataUrl, destfile = dataZip)
+        if(!file.exists(dataZip)){
+                ## download the file (see functions lines 17 to 22)
+                dataDl()
                 # record the date of download and write it in a text file
                 dateDownloaded <- date()
                 fileConn <- file("exdata_data_dateDownloaded.txt")
                 writeLines(dateDownloaded, fileConn)
                 close(fileConn)
                 ## clean the global environement
-                rm(list = c("data", "dateDownloaded", "fileConn"))
+                rm(list = c("dataDl", "dateDownloaded", "fileConn"))
         }
         unzip(dataZip)
 }
 ## clean the global environement
 rm(list= c("dataUrl", "dataZip", "dataFile"))
 
-
 ## due to the length of the data more than 2 millions lines,
 ## we'll read only the relevant lines for this study
-## the function below (readThisData())
+## the functions below (readThisData() and readThisData2())
 ## write a small 176ko txt file (hpc_subset.txt)
 ## much easier to handle and with only the relevant lines
+## readThisData() will be launched for Windos OS
+## readThisData2() will be launch for other OS
 
 #### Note : I've tested several ways to read the data this one is
 #### one of the quickest and more automated one (less than 3 seconds)
 
-#### however this function in this form work for Windows OS only !
-#### shell() does not exist on MAC or LINUX
-#### to make it work on MAC or LINUX, you will have to replace :
-#### "shell" by "system" (2 lines) and maybe "grep -E" by "grep" (1 line)
-#### in the regular expression you may have to suppress the backlash "\"
-#### or replace it by a forwardlash "/".
-
-#### an alternate multi-platform reading function (readThisData2)
-#### has been commented out below (lines 69 to 93)
-#### However as readThisData2() can take up to 4 minutes
-#### I'll go with the three seconds of readThisData()
-
+## for Windows OS, use the shell() function
 readThisData <- function(){ # process duration : three seconds
         ## read the firstline and write it in a new file
         shell("head -n 1 household_power_consumption.txt > hpc_subset.txt")
@@ -60,38 +61,20 @@ readThisData <- function(){ # process duration : three seconds
         #### in order to accomodate the shell() function syntax
         shell("grep -E \"^1/2/2007|^2/2/2007\" household_power_consumption.txt >> hpc_subset.txt")
 }
+
+## for other OS (Mac, Linux,...), use the system() function
+readThisData2 <- function(){ # process duration : three seconds
+        system("head -n 1 household_power_consumption.txt > hpc_subset.txt")
+        system("grep -E \"^1/2/2007|^2/2/2007\" household_power_consumption.txt >> hpc_subset.txt")
+}
+
 cat("reading and subsetting the data ")
-readThisData()
+## launch the function according to the OS
+if(.Platform$OS.type == "windows"){readThisData()}
+if(.Platform$OS.type != "windows"){readThisData2()}
 cat(": done ")
 ## clean the global environement
-rm("readThisData")
-
-#### alternate multi-platform function : (4 minutes)
-# readThisData2 <- function(){
-#         con  <- file("household_power_consumption.txt", open = "r")
-#         con2 <- file("hpc_subset.txt", open = "w")
-#         #the loop check if there is still some text to read
-#         while(length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 0) {
-#             # grab the header line
-#             if(grepl("^Date", oneLine)){cat(oneLine, file = con2, sep ="\n")}
-#             # grab the observations recorded on Feb. 1st, 2007
-#             if(grepl("^1/2/2007", oneLine)){
-#                 # write each relevant lines to the hpc_subset.txt file
-#                 cat(oneLine, file = con2, sep = "\n")}
-#             # grab the observations recorded on Feb. 2nd, 2007
-#             if(grepl("^2/2/2007", oneLine)){
-#                     cat(oneLine, file = con2, sep = "\n")}  
-#         }
-#         close(con)
-#         close(con2)
-# }
-# cat("reading and subsetting the data ")
-# readThisData2()
-# cat(": done ")
-# ## clean the global environement
-# rm("readThisData2")
-#### end of alternate mutli-platform function
-
+rm(list=c("readThisData", "readThisData2"))
 
 ## read the simplified data (less than a second)
 dataLines <- read.table("hpc_subset.txt", header = TRUE, sep = ";",
@@ -113,12 +96,16 @@ dataLines <-dataLines[,-2]
 colnames(dataLines) <- c("datetime", c(colnames(dataLines[2:8])))
 cat(": done ")
 
-# plot the data (plot1)
+# plot the data (plot3)
 
 plot3 <- function(){
         # open an empty png file
-        png(file = "plot3.png", width = 480, height = 480,
-            type = "cairo", bg = "transparent")
+        if(.Platform$OS.type == "windows"){
+                png(file = "plot1.png", width = 480, height = 480, 
+                    type = "cairo", bg = "transparent")}
+        if(.Platform$OS.type != "windows"){
+                png(file = "plot1.png", width = 480, height = 480, 
+                    bg = "transparent")}
         #plot the data
         plot(dataLines$Sub_metering_1, 
              ylab = "Energy sub metering",
@@ -131,7 +118,8 @@ plot3 <- function(){
         #### record locale
         userLocale <- Sys.getlocale("LC_TIME")
         #### change temporary the locale and set it back on exit
-        Sys.setlocale("LC_TIME", "English")
+        if(.Platform$OS.type == "windows"){Sys.setlocale("LC_TIME", "English")}
+        if(.Platform$OS.type != "windows"){Sys.setlocale("LC_TIME", "C")}
         on.exit(Sys.setlocale("LC_TIME", userLocale))
         #### catch the values of the plot, add one minute for the end of plot
         #### in order to catch the next day's name
